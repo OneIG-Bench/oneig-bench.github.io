@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Step1X-Edit: A Practical Framework for General Image Editing">
+    <meta name="keywords" content="Muliti-modal, SVG Generation, Anime">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification=vh6COBpKIl8_jt8K_OiEfMQrcSfgydEX5yhANBaDStc" />
+    <title>Step1X-Edit: A Practical Framework for General Image Editing</title>
+
+    <!--Global site tag (gtag.js) Google Analytics -->
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="./staticcss/index.css" />
+    <link rel="icon" href="./staticimages/test3.png" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script defer src="./staticjs/fontawesome.all.min.js"></script>
+    <script src="./staticjs/bulma-slider.min.js"></script>
+    <script src="./staticjs/index.js"></script>
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"
+    ></script>
+    <style>
+        body {
+          margin: auto;
+          font-family: Arial, sans-serif;
+        }
+  
+        nav {
+          position: auto;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background-color: ghostwhite;
+          z-index: 100;
+          box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+  
+        nav ul {
+          padding: 0;
+          margin: auto;
+          list-style: none;
+          display: flex;
+          justify-content: center;
+        }
+  
+        nav ul li {
+          margin: auto;
+        }
+  
+        nav ul li a {
+          display: block;
+          padding: 5px;
+          /*      color: #fff;*/
+          text-decoration: none;
+          transition: background-color 0.3s;
+        }
+  
+        nav ul li a:hover {
+          background-color: #555;
+        }
+  
+        /* iframe 容器 */
+        .iframe-container {
+          position: relative;
+          display: inline-block;
+        }
+  
+        /* 提示器 */
+        .tooltip {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          padding: 10px;
+          background-color: #333;
+          color: #fff;
+          font-size: 12px;
+          white-space: nowrap;
+          transform: translate(-50%, -50%);
+          visibility: visible;
+          opacity: 1;
+          transition: visibility 0.2s, opacity 0.2s;
+        }
+  
+        /* 鼠标悬停在 iframe 容器时隐藏提示器 */
+        .iframe-container:hover .tooltip {
+          visibility: hidden;
+          opacity: 0;
+        }
+  
+        .title {
+          font-size: 41px;
+        }
+  
+        /*  teaser font-size  */
+        .teaserTitle {
+          font-size: 76px;
+        }
+  
+        .subTeaserTitle {
+          font-size: 15px;
+        }
+  
+        .carousel-indicators {
+          bottom: -26px;
+        }
+  
+        .carousel-control.left,
+        .carousel-control.right {
+          background-image: none !important;
+          filter: none !important;
+          width: 20px;
+        }
+  
+        .columns {
+          display: flex;
+          flex-wrap: wrap;
+        }
+  
+        .column {
+          flex: 1;
+          min-width: 150px;
+        }
+  
+        .carousel-indicators ol {
+          width: 100%;
+        }
+  
+        .carousel-indicators li {
+          height: 3px !important;
+          border-radius: 0px !important;
+          width: 25%;
+        }
+      </style>
+
+    <style>
+		.render_wrapper {
+			position: relative;
+            height: 300px;
+         }
+        .render_wrapper_small {
+			position: relative;
+            height: 200px;
+         }
+		.render_div {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+        #interpolation-image-wrapper-car{
+            text-align: center;
+        }
+        #interpolation-image-wrapper-chair{
+            text-align: center;
+        }
+        .nested-columns {
+            margin-bottom: 0 !important;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-0 publication-title">
+                          OneIG-Bench: Omni-dimensional Nuanced Evaluation for Image Generation <br />
+                        </h1>
+            
+                        <div class="is-size-4 publication-authors">
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=i1accPcAAAAJ&hl=en">Jingjing Chang</a><sup>1,2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://github.com/fangyixiao18">Yixiao Fang</a><sup>2&dagger;</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=k_jXsNYAAAAJ&hl=en">Peng Xing</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                              <a href="https://openreview.net/profile?id=~Shuhan_Wu3">Shuhan Wu</a><sup>2</sup>,
+                            </span>
+			                      <span class="author-block">
+                                <a href="https://wchengad.github.io">Wei Cheng</a><sup>2</sup>,</span>
+                            </span>
+                        </div>
+                        <div class="is-size-4 publication-authors">
+                            <span class="author-block">
+                              <a href="https://wrong.wang/">Rui Wang</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                              <a href="https://scholar.google.com/citations?user=tgDc0fsAAAAJ&hl=en">Xianfang Zeng</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://www.skicyyu.org/">Gang Yu</a><sup>2&ddagger;</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://dmne.sjtu.edu.cn/dmne/faculty/chenhaibao/">Hai-Bao Chen</a><sup>1&ddagger;</sup>
+                            </span>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>&dagger;</sup>Project lead,</span>
+                            <span class="author-block"><sup>&ddagger;</sup>Correspondence Authors</span>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Shanghai Jiao Tong University,</span>
+                            <span class="author-block"><sup>2</sup>StepFun</span>
+                        </div>
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a class="external-link button is-normal is-rounded is-dark" href="https://arxiv.org/pdf/xxxx.xxxxx">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+
+
+                                <!--Github Link. -->
+                                <span class="link-block">
+                                    <a href="https://github.com/OneIG-Bench/OneIG-Benchmark" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github" style="color: white;"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+                                <!--Weights Link. -->
+                                <span class="link-block">
+                                  <a href="https://huggingface.co/datasets/OneIG-Bench/OneIG-Bench" class="external-link button is-normal is-rounded is-dark">
+                                      <span class="icon">
+                                          <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" style="width: 20px; height: 20px; filter: white;">
+                                      </span>
+                                      <span>OneIG-Bench</span>
+                                  </a>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--3.1 Banner -->
+    <!-- <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered" style="margin-top: -20px">
+            <video src="./assets/Step1X-Edit-demo.mp4" width="100%" autoplay loop muted playsinline></video>
+            </div>
+            <div class="columns is-centered has-text-centered" style="margin-top: 20px">
+              <b>Step1X-Edit</b>&nbsp;is a unified image editing model performs impressively on various genuine user instructions.
+            </div>
+
+        </div>
+    </section> -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered" style="margin-top: -20px">
+            <!-- Assuming this is an image, not a video -->
+            <img src="./assets/OneIG-Bench.png" width="100%" alt="OneIG-Bench Image" />
+        </div>
+        <div class="columns is-centered has-text-centered" style="margin-top: 20px">
+            <strong>OneIG-Bench</strong>&nbsp;is a comprehensive benchmark framework for fine-grained evaluation of T2I models across multiple dimensions.
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container" style="margin-bottom: 2vh;">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3" style="font-size: 2.6rem;">Introduction</h2>
+                <div class="content has-text-justified" style="font-size: 1.1rem;">
+                    Text-to-image (T2I) models have garnered significant attention for generating high-quality images aligned with text prompts. However, rapid T2I model advancements reveal limitations in early benchmarks, lacking comprehensive evaluations, for example, the evaluation on reasoning,  text rendering and style. Notably, recent state-of-the-art models, with their rich knowledge modeling capabilities, show promising results on the image generation problems requiring strong reasoning ability, yet existing evaluation systems have not adequately addressed this frontier. To systematically address these gaps, we introduce OneIG-Bench, a meticulously designed comprehensive benchmark framework for fine-grained evaluation of T2I models across multiple dimensions, including prompt-image  alignment, text rendering precision, reasoning-generated content, stylization, and diversity. By structuring the evaluation, this benchmark enables in-depth analysis of model performance, helping researchers and practitioners pinpoint strengths and bottlenecks in the full pipeline of image generation. Specifically, OneIG-Bench enables flexible evaluation by allowing users to focus on a particular evaluation subset. Instead of generating images for the entire set of prompts, users can generate images only for the prompts associated with the selected dimension and complete the corresponding evaluation accordingly.
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+    </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Title Section -->
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3" style="font-size: 2rem;">Benchmark Comparison</h2>
+    </div>
+
+    <!-- Image Section -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 20px;">
+      <img src="./assets/benchmark_comparison.png" alt="OneIG-Bench Image" style="max-width: 100%; height: auto;" />
+    </div>
+        
+    <!-- Description Section -->
+    <div class="content has-text-justified" style="font-size: 1.1rem;">
+      &nbsp;Unless otherwise specified, <strong>OneIG-Bench</strong> refers to <strong>OneIG-Bench-EN</strong> in the subsequent results sections.
+    </div>
+  </div>
+</section>
+
+    <!-- <section class="section"></section>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered" style="margin-top: -80px">
+        <div class="column is-four-fifths">
+          <h2 class="title is-2">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+		Scalable Vector Graphics (SVG) is an important image format widely adopted in graphic design because of their resolution independence and editability. The study of generating high-quality SVG has continuously drawn attention from both designers and researchers in the AIGC community.
+		However, existing methods either produces unstructured outputs with huge computational cost or is limited to generating monochrome icons of over-simplified structures.
+		To produce high-quality and complex SVG, we propose OmniSVG, a unified framework that leverages pre-trained Vision-Language Models (VLMs) for end-to-end multimodal SVG generation. 
+		By parameterizing SVG commands and coordinates into discrete tokens, OmniSVG decouples structural logic from low-level geometry for efficient training while maintaining the expressiveness of complex SVG structure.
+		To further advance the development of SVG synthesis, we introduce MMSVG-2M, a multimodal dataset with two million richly annotated SVG assets, along with a standardized evaluation protocol for conditional SVG generation tasks. 
+		Extensive experiments show that OmniSVG outperforms existing methods and demonstrates its potential for integration into professional SVG design workflows.
+		    
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+<section id="statistic">
+  <div class="container text-center">
+    <h2 class="title is-2">Method Comparison Radar Charts on OneIG-Bench</h2>
+    <div id="charts-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px;"></div>
+    
+    <!-- Leaderboard starts here -->
+    <div id="leaderboard-container" style="margin-top: 50px; overflow-x: auto;">
+      <h2 class="title is-3">Leaderboard (Methods & Scores for Each Metrics)</h2>
+      <div id="tables-container"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chart-box {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  
+  .chart-box h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .chart-box canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+  
+  /* Leaderboard table styles */
+  .leaderboard-table {
+    width: 100%;
+    table-layout: fixed; /* 让列宽固定，不根据内容撑开 */
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .leaderboard-table thead th {
+    background-color: #fafafa;
+    border-bottom: 2px solid #ccc;
+    padding: 7px;
+    font-size: 14px;
+  }
+  
+  .leaderboard-table tbody td {
+    padding: 7px;
+    font-size: 14px;
+  }
+  
+  .leaderboard-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+  }
+  
+  .leaderboard-table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  .score-box {
+    padding: 4px 6px;
+    border-radius: 6px;
+    display: inline-block;
+    min-width: 38px;
+    font-weight: 500;
+  }
+  
+  .arrow { 
+    margin-left:4px; 
+    font-size:10px; 
+    color:#bbb; 
+  }
+  
+  .arrow.active { 
+    color:#000; 
+  }
+  
+  .leaderboard-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333;
+  }
+  
+  @media (max-width: 768px) {
+    #charts-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .leaderboard-table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const radarTitles = [
+    "Overall results on OneIG-Bench",
+    // "OneIG-Bench on Unified Multimodal Methods",
+    // "OneIG-Bench on Open-Source Methods",
+    // "OneIG-Bench on Closed-Source Methods",
+    "Overall results on OneIG-Bench-ZH",
+    "Alignment and Diversity Results on OneIG-Bench ",
+    "Text Results on OneIG-Bench ",
+    "Reasoning and Style Results on OneIG-Bench ",
+    // "Full Set - User Study",
+    // "Intersection Set - User Study"
+  ];
+
+  const radarData = [
+    {
+      "Janus-Pro": [0.553, 0.001, 0.139, 0.276, 0.365],
+      "BLIP3-o": [0.711, 0.013, 0.223, 0.361, 0.229],
+      "BAGEL": [0.769, 0.244, 0.173, 0.367, 0.251],
+      "BAGEL+CoT": [0.793, 0.020, 0.206, 0.390, 0.209],
+      "Stable Diffusion 1.5": [0.565, 0.010, 0.207, 0.383, 0.429],
+      "Stable Diffusion XL": [0.688, 0.029, 0.237, 0.332, 0.296],
+      "Stable Diffusion 3.5 Large": [0.809, 0.629, 0.294, 0.353, 0.225],
+      "Flux.1-dev": [0.786, 0.523, 0.253, 0.368, 0.238],
+      "CogView4": [0.786, 0.641, 0.246, 0.353, 0.205],
+      "SANA-1.5 1.6B (PAG)": [0.762, 0.054, 0.209, 0.387, 0.222],
+      "SANA-1.5 4.8B (PAG)": [0.765, 0.069, 0.217, 0.401, 0.216],
+      "Lumina-Image 2.0": [0.819, 0.106, 0.270, 0.354, 0.216],
+      "HiDream-I1-Full": [0.829, 0.707, 0.317, 0.347, 0.186],
+      "Imagen3": [0.843, 0.343, 0.313, 0.359, 0.188],
+      "Recraft V3": [0.810, 0.795, 0.323, 0.378, 0.205],
+      "Kolors 2.0": [0.820, 0.427, 0.262, 0.360, 0.300],
+      "Seedream 3.0": [0.818, 0.865, 0.275, 0.413, 0.277],
+      "Imagen4": [0.857, 0.805, 0.338, 0.377, 0.199],
+      "GPT-4o": [0.851, 0.857, 0.345, 0.462, 0.151]
+    },
+    // {
+    //   "Janus-Pro": [0.553, 0.001, 0.139, 0.276, 0.365],
+    //   "BLIP3-o": [0.711, 0.013, 0.223, 0.361, 0.229],
+    //   "BAGEL": [0.769, 0.244, 0.173, 0.367, 0.251],
+    //   "BAGEL+CoT": [0.793, 0.020, 0.206, 0.390, 0.209]
+    // },
+    // {
+    //   "Stable Diffusion 1.5": [0.565, 0.010, 0.207, 0.383, 0.429],
+    //   "Stable Diffusion XL": [0.688, 0.029, 0.237, 0.332, 0.296],
+    //   "Stable Diffusion 3.5 Large": [0.809, 0.629, 0.294, 0.353, 0.225],
+    //   "Flux.1-dev": [0.786, 0.523, 0.253, 0.368, 0.238],
+    //   "CogView4": [0.786, 0.641, 0.246, 0.353, 0.205],
+    //   "SANA-1.5 1.6B (PAG)": [0.762, 0.054, 0.209, 0.387, 0.222],
+    //   "SANA-1.5 4.8B (PAG)": [0.765, 0.069, 0.217, 0.401, 0.216],
+    //   "Lumina-Image 2.0": [0.819, 0.106, 0.270, 0.354, 0.216],
+    //   "HiDream-I1-Full": [0.829, 0.707, 0.317, 0.347, 0.186]
+    // },
+    // {
+    //   "Imagen3": [0.843, 0.343, 0.313, 0.359, 0.188],
+    //   "Recraft V3": [0.810, 0.795, 0.323, 0.378, 0.205],
+    //   "Kolors 2.0": [0.820, 0.427, 0.262, 0.360, 0.300],
+    //   "Seedream 3.0": [0.818, 0.865, 0.275, 0.413, 0.277],
+    //   "Imagen4": [0.857, 0.805, 0.338, 0.377, 0.199],
+    //   "GPT-4o": [0.851, 0.857, 0.345, 0.462, 0.151]
+    // },
+    {
+      "Janus-Pro": [0.324, 0.148, 0.104, 0.264, 0.358],
+      "BLIP3-o": [0.608, 0.092, 0.213, 0.369, 0.233],
+      "BAGEL": [0.672, 0.365, 0.186, 0.357, 0.268],
+      "BAGEL+CoT": [0.719, 0.127, 0.219, 0.385, 0.197],
+      "Cogview4": [0.700, 0.193, 0.236, 0.348, 0.214],
+      "Lumina-Image 2.0": [0.731, 0.136, 0.221, 0.343, 0.240],
+      "HiDream-I1-Full": [0.620, 0.205, 0.256, 0.304, 0.300],
+      "Kolors 2.0": [0.738, 0.502, 0.226, 0.331, 0.333],
+      "Seedream 3.0": [0.793, 0.928, 0.281, 0.397, 0.243],
+      "GPT-4o": [0.812, 0.650, 0.300, 0.449, 0.159]
+    },
+    {
+      "Janus-Pro": [0.557, 0.533, 0.609, 0.548, 0.515, 0.372, 0.304, 0.407, 0.332, 0.347],
+      "BLIP3-o": [0.719, 0.671, 0.754, 0.712, 0.674, 0.237, 0.161, 0.283, 0.192, 0.198],
+      "BAGEL": [0.776, 0.734, 0.782, 0.769, 0.759, 0.257, 0.197, 0.344, 0.190, 0.194],
+      "BAGEL+CoT": [0.798, 0.767, 0.824, 0.793, 0.767, 0.214, 0.164, 0.244, 0.184, 0.189],
+      "Stable Diffusion 1.5": [0.570, 0.541, 0.616, 0.558, 0.537, 0.434, 0.381, 0.481, 0.389, 0.403],
+      "Stable Diffusion XL": [0.688, 0.685, 0.732, 0.685, 0.657, 0.303, 0.239, 0.337, 0.263, 0.278],
+      "Stable Diffusion 3.5 Large": [0.818, 0.762, 0.826, 0.808, 0.795, 0.229, 0.194, 0.267, 0.194, 0.206],
+      "Flux.1-dev": [0.791, 0.759, 0.794, 0.785, 0.780, 0.243, 0.190, 0.302, 0.194, 0.199],
+      "CogView4": [0.796, 0.737, 0.792, 0.788, 0.777, 0.211, 0.153, 0.277, 0.158, 0.159],
+      "SANA-1.5 1.6B(PAG)": [0.769, 0.726, 0.770, 0.764, 0.752, 0.231, 0.153, 0.284, 0.177, 0.192],
+      "SANA-1.5 4.8B(PAG)": [0.773, 0.729, 0.782, 0.767, 0.749, 0.223, 0.154, 0.264, 0.181, 0.191],
+      "Lumina-Image 2.0": [0.825, 0.788, 0.829, 0.819, 0.812, 0.224, 0.149, 0.282, 0.171, 0.180],
+      "HiDream-I1-Full": [0.834, 0.806, 0.849, 0.834, 0.806, 0.192, 0.142, 0.260, 0.139, 0.140],
+      "Imagen3": [0.849, 0.809, 0.859, 0.841, 0.832, 0.189, 0.173, 0.246, 0.146, 0.153],
+      "Recraft V3": [0.816, 0.781, 0.838, 0.809, 0.788, 0.209, 0.178, 0.246, 0.178, 0.180],
+      "Kolors 2.0": [0.824, 0.798, 0.847, 0.814, 0.807, 0.308, 0.230, 0.359, 0.261, 0.259],
+      "Seedream 3.0": [0.818, 0.815, 0.838, 0.825, 0.789, 0.280, 0.246, 0.342, 0.235, 0.227],
+      "Imagen4": [0.860, 0.843, 0.875, 0.854, 0.847, 0.199, 0.197, 0.276, 0.147, 0.149],
+      "GPT-4o": [0.857, 0.820, 0.869, 0.851, 0.838, 0.154, 0.124, 0.177, 0.134, 0.134]
+    },
+    {
+      "Janus-Pro": [33.041, 59.695, 295.020, 0.000, 0.000, 0.000, 0.001, 0.001, 0.000],
+      "BLIP3-o": [31.627, 59.584, 258.510, 0.005, 0.000, 0.000, 0.014, 0.022, 0.012],
+      "BAGEL": [25.650, 44.453, 242.415, 0.005, 0.079, 0.000, 0.128, 0.288, 0.148],
+      "BAGEL+CoT": [30.550, 57.397, 255.220, 0.000, 0.005, 0.000, 0.024, 0.033, 0.011],
+      "Stable Diffusion 1.5": [36.227, 60.480, 290.245, 0.000, 0.011, 0.000, 0.004, 0.020, 0.004],
+      "Stable Diffusion XL": [35.045, 61.824, 290.470, 0.000, 0.008, 0.000, 0.020, 0.056, 0.029],
+      "Stable Diffusion 3.5 Large": [19.459, 38.711, 248.280, 0.432, 0.255, 0.005, 0.749, 0.740, 0.512],
+      "Flux.1-dev": [26.855, 44.189, 227.565, 0.223, 0.161, 0.000, 0.387, 0.577, 0.430],
+      "CogView4": [17.173, 29.437, 193.420, 0.200, 0.150, 0.010, 0.437, 0.593, 0.517],
+      "SANA-1.5 1.6B (PAG)": [31.573, 61.566, 288.225, 0.059, 0.003, 0.000, 0.143, 0.090, 0.031],
+      "SANA-1.5 4.8B (PAG)": [25.027, 55.634, 268.025, 0.086, 0.000, 0.000, 0.228, 0.079, 0.030],
+      "Lumina-Image 2.0": [26.259, 54.547, 270.530, 0.059, 0.013, 0.000, 0.199, 0.199, 0.083],
+      "HiDream-I1-Full": [14.464, 31.026, 177.765, 0.195, 0.166, 0.005, 0.435, 0.602, 0.576],
+      "Imagen3": [34.005, 83.171, 239.565, 0.068, 0.071, 0.000, 0.279, 0.447, 0.371],
+      "Recraft V3": [17.050, 26.945, 74.181, 0.050, 0.061, 0.006, 0.267, 0.371, 0.430],
+      "Kolors 2.0": [18.236, 37.930, 235.953, 0.125, 0.118, 0.000, 0.374, 0.483, 0.257],
+      "Seedream 3.0": [7.204, 20.596, 169.307, 0.699, 0.451, 0.109, 0.893, 0.822, 0.688],
+      "Imagen4": [18.273, 42.918, 121.625, 0.181, 0.184, 0.060, 0.364, 0.575, 0.745],
+      "GPT-4o": [18.255, 37.850, 85.430, 0.150, 0.171, 0.070, 0.323, 0.495, 0.673]
+    },
+    {
+      "Janus-Pro": [0.153, 0.134, 0.123, 0.130, 0.144, 0.131, 0.189, 0.224, 0.212, 0.412],
+      "BLIP3-o": [0.210, 0.225, 0.219, 0.223, 0.219, 0.232, 0.275, 0.381, 0.287, 0.390],
+      "BAGEL": [0.191, 0.152, 0.183, 0.149, 0.168, 0.169, 0.248, 0.363, 0.297, 0.440],
+      "BAGEL+CoT": [0.206, 0.184, 0.206, 0.200, 0.212, 0.208, 0.273, 0.372, 0.329, 0.499],
+      "Stable Diffusion 1.5": [0.217, 0.203, 0.211, 0.212, 0.207, 0.185, 0.251, 0.483, 0.298, 0.349],
+      "Stable Diffusion XL": [0.246, 0.216, 0.244, 0.235, 0.234, 0.239, 0.289, 0.316, 0.307, 0.339],
+      "Stable Diffusion 3.5 Large": [0.291, 0.299, 0.283, 0.306, 0.292, 0.292, 0.319, 0.356, 0.315, 0.335],
+      "Flux.1-dev": [0.239, 0.257, 0.247, 0.265, 0.247, 0.253, 0.298, 0.367, 0.298, 0.391],
+      "CogView4": [0.223, 0.251, 0.237, 0.279, 0.239, 0.252, 0.296, 0.376, 0.294, 0.369],
+      "SANA-1.5 1.6B (PAG)": [0.207, 0.203, 0.222, 0.218, 0.211, 0.193, 0.280, 0.438, 0.331, 0.370],
+      "SANA-1.5 4.8B (PAG)": [0.214, 0.206, 0.224, 0.224, 0.214, 0.203, 0.282, 0.443, 0.340, 0.379],
+      "Lumina-Image 2.0": [0.208, 0.206, 0.225, 0.222, 0.215, 0.197, 0.278, 0.351, 0.325, 0.360],
+      "HiDream-I1-Full": [0.324, 0.324, 0.305, 0.312, 0.318, 0.305, 0.347, 0.331, 0.295, 0.368],
+      "Imagen3": [0.304, 0.319, 0.298, 0.303, 0.320, 0.315, 0.338, 0.378, 0.309, 0.371],
+      "Recraft V3": [0.323, 0.337, 0.303, 0.320, 0.319, 0.328, 0.344, 0.418, 0.347, 0.332],
+      "Kolors 2.0": [0.255, 0.252, 0.256, 0.263, 0.258, 0.277, 0.314, 0.370, 0.336, 0.360],
+      "Seedream 3.0": [0.246, 0.295, 0.313, 0.253, 0.297, 0.270, 0.277, 0.383, 0.365, 0.524],
+      "Imagen4": [0.334, 0.346, 0.314, 0.343, 0.342, 0.346, 0.351, 0.336, 0.365, 0.452],
+      "GPT-4o": [0.351, 0.348, 0.323, 0.334, 0.350, 0.355, 0.364, 0.532, 0.404, 0.411]
+    },
+    // {
+    //   "Step1X-Edit": [6.547, 6.545, 6.204, 6.483, 6.787, 7.221, 6.975, 6.512, 7.068, 6.921, 6.448],
+    //   "GPT-4o": [7.205, 6.491, 6.607, 8.096, 7.768, 6.961, 7.622, 8.331, 8.067, 7.427, 8.301],
+    //   "Gemini": [6.781, 6.369, 6.040, 6.938, 5.591, 4.676, 7.501, 6.447, 7.003, 5.765, 6.350],
+    //   "Doubao": [7.430, 7.095, 6.339, 6.973, 6.972, 6.767, 7.674, 6.748, 7.447, 3.471, 7.383],
+    //   "OmniGen": [5.281, 6.003, 5.308, 2.916, 3.087, 4.903, 6.628, 6.352, 5.616, 4.519, 5.064],
+    //   "AnyEdit": [4.663, 4.260, 2.537, 2.024, 3.479, 2.032, 3.995, 3.089, 3.180, 0.922, 5.151],
+    //   "Instruct-Pix2Pix": [3.825, 5.182, 3.688, 3.509, 4.339, 4.560, 3.461, 2.031, 4.237, 0.955, 4.733],
+    //   "MagicBrush": [5.637, 5.136, 5.078, 4.513, 4.487, 4.439, 5.252, 3.704, 4.941, 1.384, 5.130]
+    // },
+    // {
+    //   "Step1X-Edit": [6.856, 6.657, 6.326, 6.596, 7.343, 7.223, 7.234, 6.279, 7.149, 7.030, 6.249],
+    //   "GPT-4o": [7.197, 6.670, 6.343, 8.040, 7.729, 6.934, 7.620, 8.510, 8.135, 7.446, 8.057],
+    //   "Gemini": [6.867, 6.616, 6.045, 6.658, 5.890, 4.746, 7.424, 6.367, 6.948, 5.743, 6.238],
+    //   "Doubao": [7.451, 7.214, 6.308, 7.286, 7.196, 6.733, 7.569, 6.642, 7.698, 3.467, 7.542],
+    //   "OmniGen": [4.832, 6.165, 5.644, 3.699, 2.986, 4.815, 6.842, 6.351, 5.729, 4.613, 5.108],
+    //   "AnyEdit": [4.843, 4.484, 2.811, 2.049, 3.320, 1.954, 3.970, 2.902, 3.494, 0.757, 4.956],
+    //   "Instruct-Pix2Pix": [3.983, 5.354, 3.612, 2.925, 4.331, 4.674, 3.245, 2.259, 4.249, 0.860, 4.448],
+    //   "MagicBrush": [5.572, 5.132, 5.203, 4.324, 4.595, 4.437, 5.427, 3.738, 4.986, 1.393, 5.548]
+    // },
+    // {
+    //   "Step1X-Edit": [6.719, 6.428, 6.515, 6.586, 6.635, 7.295, 7.364, 7.009, 7.171, 6.926, 6.824],
+    //   "GPT-4o": [6.866, 6.195, 6.921, 7.154, 7.491, 7.268, 6.713, 7.283, 8.106, 7.995, 8.333],
+    //   "Gemini": [5.938, 5.787, 3.480, 5.738, 5.162, 4.211, 7.115, 4.720, 5.559, 5.050, 6.196],
+    //   "Doubao": [7.512, 7.755, 6.248, 7.377, 6.939, 6.734, 7.233, 5.895, 7.535, 3.524, 7.742]
+    // },
+    // {
+    //   "Step1X-Edit": [6.987, 6.636, 6.245, 6.695, 6.752, 7.155, 7.334, 7.119, 7.161, 7.029, 6.762],
+    //   "GPT-4o": [6.961, 6.067, 7.245, 7.520, 7.223, 7.265, 6.726, 7.219, 8.103, 7.980, 8.579],
+    //   "Gemini": [6.051, 5.902, 3.685, 5.528, 5.295, 4.306, 7.246, 4.924, 5.717, 5.151, 6.754],
+    //   "Doubao": [7.796, 7.762, 6.108, 7.585, 7.112, 6.602, 7.675, 6.028, 7.509, 3.496, 7.889]
+    // },
+    // {
+    //   "Step1X-Edit": [3.438*2,3.346*2,3.781*2,3.172*2,3.669*2,3.742*2,3.292*2,3.254*2,3.289*2,3.931*2,3.253*2],
+    //   "GPT-4o": [2.787*2,2.892*2,3.345*2,4.020*2,3.910*2,3.604*2,3.425*2,3.670*2,3.746*2,3.997*2,3.842*2],
+    //   "Gemini": [3.277*2,3.664*2,3.312*2,3.290*2,3.593*2,3.579*2,3.009*2,3.138*2,3.371*2,2.429*2,3.654*2],
+    //   "Doubao": [3.274*2,2.758*2,2.842*2,2.787*2,2.457*2,2.308*2,3.187*2,2.930*2,3.041*2,3.132*2,2.514*2],
+    //   "OmniGen": [2.086*2,1.911*2,1.777*2,1.977*2,1.816*2,1.766*2,2.039*2,2.003*2,1.485*2,1.503*2,1.811*2]
+    // },
+    // {
+    //   "Step1X-Edit": [3.321*2,3.392*2,3.723*2,2.646*2,3.366*2,3.651*2,3.103*2,2.933*2,3.145*2,3.883*2,2.828*2],
+    //   "GPT-4o": [2.697*2,2.879*2,3.193*2,3.904*2,3.787*2,3.507*2,3.227*2,3.639*2,3.643*2,3.974*2,3.835*2],
+    //   "Gemini": [3.679*2,3.730*2,3.658*2,3.553*2,3.758*2,3.752*2,3.438*2,3.368*2,3.750*2,2.568*2,3.848*2],
+    //   "Doubao": [3.542*2,3.279*2,2.906*2,3.425*2,2.810*2,2.450*2,3.525*2,3.349*2,3.181*2,3.219*2,3.074*2],
+    //   "OmniGen": [1.735*2,1.811*2,1.485*2, 1.457*2,1.272*2,1.602*2,1.718*2,1.734*2,1.287*2,1.388*2,1.400*2]
+    // }
+  ];
+
+  const radarScales = {
+  0: { mins: [0, 0, 0, 0, 0], maxs: [1, 1, 0.5, 0.5, 0.5] }, // idx = 0
+  // 1: { mins: [0, 0, 0, 0, 0], maxs: [1, 1, 0.5, 0.5, 0.5] }, // idx = 0
+  // 2: { mins: [0, 0, 0, 0, 0], maxs: [1, 1, 0.5, 0.5, 0.5] }, // idx = 0
+  1: { mins: [0, 0, 0, 0, 0], maxs: [1, 1, 0.5, 0.5, 0.5] }, // idx = 1
+  2: { mins: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], maxs: [1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5, 0.5] }, // idx = 2
+  3: { mins: [0, 0, 0, 0, 0, 0, 0, 0, 0], maxs: [36.227, 83.171, 295.020, 1, 1, 1, 1, 1, 1] }, // idx = 3
+  4: { mins: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], maxs: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 1, 1] }, // idx = 4
+  // ...
+  };
+
+  const labels = [["Alignment", "Text", "Reasoning", "Style", "Diversity"],
+  // ["Alignment", "Text", "Reasoning", "Style", "Diversity"],
+  // ["Alignment", "Text", "Reasoning", "Style", "Diversity"],
+  ["Alignment", "Text", "Reasoning", "Style", "Diversity"],
+  ["Alignment-NP", "Alignment-T&P", "Alignment-S", "Alignment-M", "Alignment-L",
+   "Diversity-NP", "Diversity-T&P", "Diversity-S", "Diversity-M", "Diversity-L",
+  ],
+  ["Edit Distance-S","Edit Distance-M","Edit Distance-L",
+   "Completion Ratio-S","Completion Ratio-M","Completion Ratio-L",
+   "Word Accuracy-S","Word Accuracy-M","Word Accuracy-L"
+  ],
+  ["Geography", "Computer Science", "Biology", "Mathematics", "Physics", "Chemistry", "Common Sense",
+    "Traditional Style", "Media Style", "Anime Style"
+  ],
+  // [
+  //   "Background Change", "Color Alteration", "Material Modification", "Motion Change",
+  //   "Portrait Beautification", "Style Transfer", "Subject Addition", "Subject Removal",
+  //   "Subject Replacement", "Text Modification", "Tone Transformation"
+  // ],
+  // [
+  //   "Background Change", "Color Alteration", "Material Modification", "Motion Change",
+  //   "Portrait Beautification", "Style Transfer", "Subject Addition", "Subject Removal",
+  //   "Subject Replacement", "Text Modification", "Tone Transformation"
+  // ],
+  // [
+  //   "Background Change", "Color Alteration", "Material Modification", "Motion Change",
+  //   "Portrait Beautification", "Style Transfer", "Subject Addition", "Subject Removal",
+  //   "Subject Replacement", "Text Modification", "Tone Transformation"
+  // ],
+  // [
+  //   "Background Change", "Color Alteration", "Material Modification", "Motion Change",
+  //   "Portrait Beautification", "Style Transfer", "Subject Addition", "Subject Removal",
+  //   "Subject Replacement", "Text Modification", "Tone Transformation"
+  // ]
+];
+
+  const TitleFontColor = '#333333'; //标题字体颜色
+
+// 归一化函数
+const normalize = (val, min, max) => (val - min) / (max - min + 1e-6);
+
+  // Initialize all charts
+  radarTitles.forEach((title, idx) => {
+    const div = document.createElement('div');
+    div.className = "chart-box";
+    div.innerHTML = `
+      <h3 style="color: ${TitleFontColor};">${title}</h3>
+      <canvas id="chart${idx}" width="800" height="800"></canvas>
+    `;
+    document.getElementById('charts-container').appendChild(div);
+
+    const datasets = Object.entries(radarData[idx]).map(([name, values], i) => {
+      // const colors = [
+      //   '#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0',
+      //   '#9966FF', '#FF9F40', '#C9CBCF', '#E57373'
+      // ];
+      const colors = [
+        "#36A2EB", "#FF6384", "#FFCE56", "#4BC0C0", "#9966FF", 
+        "#FF9F40", "#C9CBCF", "#E57373", "#F1C40F", "#1ABC9C",
+        "#9B59B6", "#2ECC71", "#E74C3C", "#8E44AD", "#3498DB",
+        "#F39C12", "#D35400", "#7B7D7D", "#F5A623", "#D9A7A7"
+      ];
+      const rawValues = radarData[idx];
+      const mins = radarScales[idx]?.mins || Array(labels[idx].length).fill(0);
+      const maxs = radarScales[idx]?.maxs || Array(labels[idx].length).fill(1);
+      if (idx !== 3) {
+        normalized = values.map((val, j) => normalize(val, mins[j], maxs[j]));
+      } else {
+        normalized = values.map((val, j) => {
+          if (j < 3) {
+            return (maxs[j] - val) / (maxs[j] - mins[j] + 1e-6);
+          } else {
+            return normalize(val, mins[j], maxs[j]);
+          }
+        });
+      }
+      return {
+        label: name,
+        // data: values,
+        data: normalized,
+        fill: true,
+        backgroundColor: colors[i % colors.length] + '33',
+        borderColor: colors[i % colors.length],
+        pointBackgroundColor: colors[i % colors.length],
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6
+      };
+    });
+
+    new Chart(document.getElementById(`chart${idx}`), {
+      type: 'radar',
+      data: { 
+        labels: labels[idx],
+        datasets: datasets 
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              font: {
+                size: 14,
+                family: "'Chalkboard', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+              }
+            }
+          },
+          tooltip: {
+            bodyFont: {
+              size: 14
+            },
+            titleFont: {
+              size: 16,
+              weight: 'bold',
+              color: 'rgba(0, 0, 0, 0.1)'
+            }
+          }
+        },
+        scales: {
+          r: {
+            angleLines: {
+              display: true,
+              color: 'rgba(0, 0, 0, 0.1)'
+            },
+            suggestedMin: 0,
+            // suggestedMax: 10,
+            suggestedMax: 1,
+            ticks: {
+              stepSize: 2,
+              font: {
+                size: 12
+              },
+              backdropColor: 'rgba(255, 255, 255, 0.75)'
+            },
+            pointLabels: {
+              font: {
+                size: 14,
+                family: "'Chalkboard', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+              }
+            },
+            grid: {
+              color: 'rgba(0, 0, 0, 0.1)'
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.1
+          }
+        }
+      }
+    });
+  });
+
+  // Create leaderboard tables
+  function createLeaderboardTables() {
+    const container = document.getElementById('tables-container');
+    const colColors = [
+      [255, 200, 200], [200, 255, 200], [255, 240, 200], [210, 210, 255],
+      [245, 210, 245], [180, 180, 180], [180, 240, 240], [240, 255, 200],
+      [220, 220, 255], [255, 255, 200], [255, 210, 210]
+    ];
+
+    radarTitles.forEach((title, idx) => {
+      // const tableContainer = document.createElement('div');
+      // tableContainer.className = 'leaderboard-container';
+      const tableContainer = document.createElement('div');
+      tableContainer.className = 'leaderboard-container';
+
+      // 设置宽度和居中样式
+      if (idx === 0 || idx === 1) {
+        tableContainer.style.width = '75%';
+        tableContainer.style.margin = '0 auto';  // 居中
+      } else {
+        tableContainer.style.width = '100%';
+        tableContainer.style.margin = '0 auto';       // 左对齐
+      }
+      
+      const titleElement = document.createElement('div');
+      titleElement.className = 'leaderboard-title';
+      titleElement.textContent = title;
+      tableContainer.appendChild(titleElement);
+      
+      const table = document.createElement('table');
+      table.className = 'leaderboard-table';
+      
+      // Create table header
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      
+      // First column header (for model names)
+      const modelHeader = document.createElement('th');
+      modelHeader.textContent = 'Methods';
+      modelHeader.dataset.index = -1;
+      headerRow.appendChild(modelHeader);
+      
+      // Add labels as headers
+      labels[idx].forEach((label, i) => {
+        const th = document.createElement('th');
+        th.textContent = label;
+        th.dataset.index = i;
+        headerRow.appendChild(th);
+      });
+      
+      // Add average column
+      if (idx >= 5) {
+        const avgHeader = document.createElement('th');
+
+        avgHeader.textContent = 'Avg';
+        avgHeader.dataset.index = labels[idx].length;
+        headerRow.appendChild(avgHeader);
+      }
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      // Create table body
+      const tbody = document.createElement('tbody');
+      
+      // Get model names and sort them (optional)
+      const modelNames = Object.keys(radarData[idx]);
+      
+      // Add rows for each model
+      modelNames.forEach(modelName => {
+        const row = document.createElement('tr');
+        
+        // Model name cell
+        const modelCell = document.createElement('td');
+        modelCell.textContent = modelName;
+        row.appendChild(modelCell);
+        
+        // Data cells
+        const values = radarData[idx][modelName];
+        let sum = 0;
+        
+        values.forEach((value, i) => {
+          const cell = document.createElement('td');
+          cell.textContent = value.toFixed(3);
+          row.appendChild(cell);
+          sum += value;
+        });
+        
+        // Average cell
+        if (idx >= 5) {
+          const avgCell = document.createElement('td');
+          const avg = sum / values.length;
+          avgCell.textContent = avg.toFixed(3);
+          row.appendChild(avgCell);
+        }
+        tbody.appendChild(row);
+      });
+      
+      table.appendChild(tbody);
+      tableContainer.appendChild(table);
+      container.appendChild(tableContainer);
+      
+      // Initialize sorting and coloring for this table
+      if (idx != 3) {
+        initTable(table, colColors, []);
+      }
+      else {
+        initTable(table, colColors, [0, 1, 2])
+        // initTable(table, colColors)
+      }
+    });
+  }
+  
+  // Initialize sorting and coloring for a table
+  function initTable(table, colColors, reverseCols) {    
+    const tbody = table.querySelector("tbody");
+    const headers = Array.from(table.querySelectorAll("thead th[data-index]"));
+    const sortState = {};
+    // Apply gradient colors to the table
+    function applyGradientColors() {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const colCount = rows[0].cells.length - 1; // exclude model name
+    
+      for (let col = 1; col <= colCount; col++) {
+        const cells = rows.map(r => r.cells[col]);
+        const values = cells.map(c => parseFloat(c.textContent)).filter(v => !isNaN(v));
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        const [r, g, b] = colColors[(col - 1) % colColors.length];
+
+        const shouldReverse = reverseCols.includes(col - 1);
+        
+        cells.forEach(cell => {
+          const val = parseFloat(cell.textContent);
+          if (!isNaN(val)) {
+            let norm = (val - min) / (max - min + 1e-6);
+            if (shouldReverse) {
+              norm = 1 - norm; // reverse the gradient
+            }
+            // const alpha = 0.2 + 0.8 * norm;
+            const alpha = 0.1 + 0.9 * norm;
+            cell.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
+            cell.style.borderRadius = "6px";
+          }
+        });
+      }
+    }
+    
+    // Add sorting arrows to headers
+    headers.forEach(th => {
+      const span = document.createElement("span");
+      span.className = "arrow";
+      span.textContent = "▲";
+      th.appendChild(span);
+      th.style.cursor = "pointer";
+    });
+    
+    // Initial color application
+    applyGradientColors();
+    
+    // Add sorting event listeners
+    headers.forEach(th => {
+      const col = +th.dataset.index;
+      if (col === -1) return; // Skip model name column
+      
+      th.addEventListener("click", () => {
+        sortState[col] = !(sortState[col] === "asc") ? "asc" : "desc";
+        const asc = sortState[col] === "asc";
+        
+        const rows = Array.from(tbody.querySelectorAll("tr")).sort((a, b) => {
+          // +1 because first column is model name
+          const va = parseFloat(a.cells[col + 1].textContent) || -Infinity;
+          const vb = parseFloat(b.cells[col + 1].textContent) || -Infinity;
+          return asc ? va - vb : vb - va;
+        });
+        
+        tbody.replaceChildren(...rows);
+        
+        // Update arrow indicators
+        headers.forEach(h => {
+          const arrow = h.querySelector(".arrow");
+          if (!arrow) return;
+          if (h === th) {
+            arrow.classList.add("active");
+            arrow.textContent = asc ? "▲" : "▼";
+          } else {
+            arrow.classList.remove("active");
+            arrow.textContent = "▲";
+          }
+        });
+        
+        // Reapply colors after sorting
+        applyGradientColors();
+      });
+    });
+  }
+
+  // Create all tables when the page loads
+  window.onload = function() {
+    createLeaderboardTables();
+  };
+</script>
+
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre>
+<code>@article{chang2025oneig,
+  title={OneIG-Bench: Omni-dimensional Nuanced Evaluation for Image Generation}, 
+  author={Jingjing Chang and Yixiao Fang and Peng Xing and Shuhan Wu and Wei Cheng and Rui Wang and Xianfang Zeng and Gang Yu and Hai-Bao Chen},
+  journal={arXiv preprint arxiv:xxxx.xxxxx},
+  year={2025}
+}
+</code></pre>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p style="text-align:center">
+                            Source code mainly borrowed from <a href="https://keunhong.com/">Keunhong Park</a>'s <a
+                                href="https://nerfies.github.io/">Nerfies website</a>.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+<!--   <script src="js/index.js"></script>-->
+
+</body>
+
+</html>
